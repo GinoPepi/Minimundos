@@ -5,7 +5,7 @@ import dynamic from 'next/dynamic';
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-// Carga Spline dinámicamente solo en el cliente para evitar errores de compilación
+// Carga Spline dinámicamente solo en el cliente
 const Spline = dynamic(() => import('@splinetool/react-spline'), {
   ssr: false,
   loading: () => (
@@ -47,14 +47,17 @@ export default function Miniaturas() {
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
 
+    let mm = gsap.matchMedia();
+
+    // Animación de revelado para las tarjetas de la Historia
     const tarjetas = gsap.utils.toArray(".reveal-card");
     tarjetas.forEach((tarjeta) => {
       gsap.fromTo(tarjeta, 
-        { opacity: 0, y: 60 }, 
+        { opacity: 0, y: 50 }, 
         {
           opacity: 1,
           y: 0,
-          duration: 1.2,
+          duration: 1,
           ease: "power3.out",
           scrollTrigger: {
             trigger: tarjeta,
@@ -65,64 +68,75 @@ export default function Miniaturas() {
       );
     });
 
-    const scrollContainer = scrollContainerRef.current;
-    const scrollSection = scrollSectionRef.current;
+    // CONFIGURACIÓN PARA ESCRITORIO (>= 768px)
+    mm.add("(min-width: 768px)", () => {
+      const scrollContainer = scrollContainerRef.current;
+      const scrollSection = scrollSectionRef.current;
 
-    let pin = gsap.to(scrollContainer, {
-      x: () => -(scrollContainer.scrollWidth - window.innerWidth),
-      ease: "none",
-      scrollTrigger: {
-        trigger: scrollSection,
-        pin: true,
-        scrub: 1,
-        start: "top top",
-        end: () => "+=" + (scrollContainer.scrollWidth - window.innerWidth),
-        invalidateOnRefresh: true,
+      if (scrollContainer && scrollSection) {
+        gsap.to(scrollContainer, {
+          x: () => -(scrollContainer.scrollWidth - window.innerWidth),
+          ease: "none",
+          scrollTrigger: {
+            trigger: scrollSection,
+            pin: true,
+            scrub: 1,
+            start: "top top",
+            end: () => "+=" + (scrollContainer.scrollWidth - window.innerWidth),
+            invalidateOnRefresh: true,
+          }
+        });
       }
+
+      gsap.to(".dec-slow", {
+        y: "-35vh",
+        rotation: 180,
+        scrollTrigger: {
+          trigger: "main",
+          start: "top top",
+          end: "bottom bottom",
+          scrub: 1.5,
+        }
+      });
+
+      gsap.to(".dec-fast", {
+        y: "-75vh",
+        rotation: -360,
+        scrollTrigger: {
+          trigger: "main",
+          start: "top top",
+          end: "bottom bottom",
+          scrub: 0.8,
+        }
+      });
+
+      gsap.to(".side-decorations", {
+        opacity: 0,
+        scale: 0.7,
+        pointerEvents: "none",
+        scrollTrigger: {
+          trigger: scrollSectionRef.current,
+          start: "top 85%",
+          end: "top 15%",
+          scrub: true,
+        }
+      });
     });
 
-    gsap.to(".dec-slow", {
-      y: "-35vh",
-      rotation: 180,
-      scrollTrigger: {
-        trigger: "main",
-        start: "top top",
-        end: "bottom bottom",
-        scrub: 1.5,
-      }
-    });
-
-    gsap.to(".dec-fast", {
-      y: "-75vh",
-      rotation: -360,
-      scrollTrigger: {
-        trigger: "main",
-        start: "top top",
-        end: "bottom bottom",
-        scrub: 0.8,
-      }
-    });
-
-    gsap.to(".side-decorations", {
-      opacity: 0,
-      scale: 0.7,
-      pointerEvents: "none",
-      scrollTrigger: {
-        trigger: scrollSection,
-        start: "top 85%",
-        end: "top 15%",
-        scrub: true,
+    // CONFIGURACIÓN PARA CELULARES (< 768px): Limpieza total de GSAP
+    mm.add("(max-width: 767px)", () => {
+      if (scrollContainerRef.current) {
+        gsap.set(scrollContainerRef.current, { clearProps: "all" });
       }
     });
 
     const timer = setTimeout(() => {
       ScrollTrigger.refresh();
-    }, 500);
+    }, 400);
 
     return () => {
       clearTimeout(timer);
-      pin.kill();
-      ScrollTrigger.getAll().forEach(t => t.kill());
+      mm.revert();
     };
 
   }, []);
@@ -173,7 +187,7 @@ export default function Miniaturas() {
         </div>
       </nav>
 
-      {/* ─── DECORACIONES LATERALES FLOTANTES ─── */}
+      {/* ─── DECORACIONES LATERALES FLOTANTES (Solo PC) ─── */}
       <div className="side-decorations fixed left-0 top-0 h-screen w-12 md:w-24 pointer-events-none z-40 hidden md:flex flex-col justify-between py-28 pl-6 transition-opacity duration-300">
         <div className="dec-fast text-amber-400">
           <svg viewBox="0 0 24 24" fill="currentColor" className="w-10 h-10 drop-shadow">
@@ -216,7 +230,7 @@ export default function Miniaturas() {
         <div className="w-full max-w-6xl grid grid-cols-1 md:grid-cols-5 gap-6 md:gap-12 items-center">
           
           {/* LADO IZQUIERDO: La Frase */}
-          <div className="col-span-1 md:col-span-2 flex flex-col justify-center pr-0 md:pr-8 pt-4 md:pt-0 text-left">
+          <div className="col-span-1 md:col-span-2 flex flex-col justify-center pr-0 md:pr-8 pt-2 md:pt-0 text-left">
             <h1 
               ref={fraseRef} 
               className="text-2xl sm:text-3xl md:text-5xl font-bold tracking-tight text-stone-900 leading-tight opacity-0 translate-y-8 select-none"
@@ -270,7 +284,7 @@ export default function Miniaturas() {
           </div>
 
           {/* LADO DERECHO: Escena de Spline */}
-          <div className="col-span-1 md:col-span-3 w-full h-[55vh] sm:h-[60vh] md:h-[70vh] rounded-3xl overflow-hidden border border-stone-200/80 shadow-sm bg-stone-50 relative cursor-grab active:cursor-grabbing">
+          <div className="col-span-1 md:col-span-3 w-full h-[50vh] sm:h-[60vh] md:h-[70vh] rounded-3xl overflow-hidden border border-stone-200/80 shadow-sm bg-stone-50 relative cursor-grab active:cursor-grabbing pointer-events-none md:pointer-events-auto">
             <Spline 
               scene="https://prod.spline.design/L1gUDvcVuunENRBt/scene.splinecode" 
               onLoad={handleSplineLoad}
@@ -283,7 +297,7 @@ export default function Miniaturas() {
       {/* ─── FILA 2: Información de la Historia ───────────────── */}
       <section 
         id="historia" 
-        className="w-full min-h-screen bg-[#C1FFB2] px-4 md:px-6 py-24 md:py-32 flex flex-col items-center justify-center gap-8 max-w-6xl mx-auto"
+        className="w-full min-h-screen bg-[#C1FFB2] px-4 md:px-6 py-20 md:py-32 flex flex-col items-center justify-center gap-8 max-w-6xl mx-auto"
       >
         <div className="flex flex-col gap-8 w-full max-w-3xl">
           
@@ -304,24 +318,24 @@ export default function Miniaturas() {
         </div>
       </section>
 
-      {/* ─── FILA 3: Sección de Encargos (Carrusel Táctil en Móvil / GSAP en PC) ────────── */}
+      {/* ─── FILA 3: Sección de Encargos ────────── */}
       <section 
         ref={scrollSectionRef} 
         id="encargos" 
-        className="w-full py-12 md:py-0 md:h-screen bg-[#F9F6F0] overflow-hidden relative border-t border-stone-200"
+        className="w-full py-10 md:py-0 md:h-screen bg-[#F9F6F0] relative border-t border-stone-200 overflow-hidden"
       >
-        {/* Indicador táctil visible solo en celulares */}
+        {/* Indicador táctil en celular */}
         <div className="md:hidden text-center pb-4 text-[11px] font-bold text-stone-500 uppercase tracking-widest animate-pulse">
-          ← Deslizá con el dedo para ver encargos →
+          ← Deslizá hacia los lados para explorar →
         </div>
 
         <div 
           ref={scrollContainerRef} 
-          className="flex overflow-x-auto md:overflow-visible snap-x snap-mandatory md:snap-none h-full w-full md:w-[500vw] gap-4 md:gap-0 px-4 md:px-0" 
+          className="flex overflow-x-auto md:overflow-visible snap-x snap-mandatory md:snap-none w-full md:w-[500vw] gap-4 md:gap-0 px-4 md:px-0 md:h-full pb-4 md:pb-0" 
         >
           
           {/* SLIDE 0: Diapositiva de Introducción */}
-          <div className="w-[88vw] sm:w-[80vw] md:w-screen h-[55vh] md:h-full shrink-0 snap-center rounded-3xl md:rounded-none flex flex-col items-center justify-center px-6 md:px-8 text-center bg-stone-900 text-stone-100 max-w-full overflow-hidden my-auto">
+          <div className="w-[85vw] sm:w-[80vw] md:w-screen h-auto md:h-full shrink-0 snap-center rounded-3xl md:rounded-none flex flex-col items-center justify-center p-6 md:px-8 text-center bg-stone-900 text-stone-100 my-auto">
             <span className="text-xs md:text-sm text-lime-500 font-bold uppercase tracking-widest">Portafolio</span>
             <h2 className="text-xl sm:text-2xl md:text-6xl font-bold mt-4 max-w-3xl leading-tight">
               Así nacen nuestros encargos: de una idea en chat al detalle físico.
@@ -330,10 +344,10 @@ export default function Miniaturas() {
           </div>
 
           {/* SLIDE 1: Santinivial S.A. */}
-          <div className="w-[88vw] sm:w-[85vw] md:w-screen h-full shrink-0 snap-center flex items-center justify-center px-2 md:px-16 max-w-full overflow-hidden my-auto">
-            <div className="w-full max-w-6xl flex flex-col md:flex-row gap-4 md:gap-16 items-center justify-center max-h-[90vh]">
+          <div className="w-[85vw] sm:w-[85vw] md:w-screen h-auto md:h-full shrink-0 snap-center flex items-center justify-center px-1 md:px-16 my-auto">
+            <div className="w-full max-w-6xl flex flex-col md:flex-row gap-4 md:gap-16 items-center justify-center">
               
-              <div className="w-full max-w-[260px] sm:max-w-md md:max-w-2xl aspect-4/3 md:aspect-square rounded-2xl md:rounded-3xl overflow-hidden border border-stone-200 bg-stone-100 shadow-md relative shrink-0">
+              <div className="w-full max-w-[250px] sm:max-w-md md:max-w-2xl aspect-4/3 md:aspect-square rounded-2xl md:rounded-3xl overflow-hidden border border-stone-200 bg-stone-100 shadow-md relative shrink-0">
                 <img 
                   src="/cuadro_santinivial.jpg" 
                   alt="Cuadro Santinivial S.A." 
@@ -365,10 +379,10 @@ export default function Miniaturas() {
           </div>
 
           {/* SLIDE 2: Podología */}
-          <div className="w-[88vw] sm:w-[85vw] md:w-screen h-full shrink-0 snap-center flex items-center justify-center px-2 md:px-16 max-w-full overflow-hidden my-auto">
-            <div className="w-full max-w-6xl flex flex-col md:flex-row gap-4 md:gap-16 items-center justify-center max-h-[90vh]">
+          <div className="w-[85vw] sm:w-[85vw] md:w-screen h-auto md:h-full shrink-0 snap-center flex items-center justify-center px-1 md:px-16 my-auto">
+            <div className="w-full max-w-6xl flex flex-col md:flex-row gap-4 md:gap-16 items-center justify-center">
               
-              <div className="w-full max-w-[260px] sm:max-w-md md:max-w-2xl aspect-4/3 md:aspect-square rounded-2xl md:rounded-3xl overflow-hidden border border-stone-200 bg-stone-100 shadow-md relative shrink-0">
+              <div className="w-full max-w-[250px] sm:max-w-md md:max-w-2xl aspect-4/3 md:aspect-square rounded-2xl md:rounded-3xl overflow-hidden border border-stone-200 bg-stone-100 shadow-md relative shrink-0">
                 <img 
                   src="/cuadro_podologia.jpg" 
                   alt="Cuadro Consultorio Podológico" 
@@ -400,10 +414,10 @@ export default function Miniaturas() {
           </div>
 
           {/* SLIDE 3: Local de Mates y Asado */}
-          <div className="w-[88vw] sm:w-[85vw] md:w-screen h-full shrink-0 snap-center flex items-center justify-center px-2 md:px-16 max-w-full overflow-hidden my-auto">
-            <div className="w-full max-w-6xl flex flex-col md:flex-row gap-4 md:gap-16 items-center justify-center max-h-[90vh]">
+          <div className="w-[85vw] sm:w-[85vw] md:w-screen h-auto md:h-full shrink-0 snap-center flex items-center justify-center px-1 md:px-16 my-auto">
+            <div className="w-full max-w-6xl flex flex-col md:flex-row gap-4 md:gap-16 items-center justify-center">
               
-              <div className="w-full max-w-[260px] sm:max-w-md md:max-w-2xl aspect-4/3 md:aspect-square rounded-2xl md:rounded-3xl overflow-hidden border border-stone-200 bg-stone-100 shadow-md relative shrink-0">
+              <div className="w-full max-w-[250px] sm:max-w-md md:max-w-2xl aspect-4/3 md:aspect-square rounded-2xl md:rounded-3xl overflow-hidden border border-stone-200 bg-stone-100 shadow-md relative shrink-0">
                 <img 
                   src="/cuadro_mates.jpg" 
                   alt="Cuadro Local de Mates y Asado" 
@@ -435,10 +449,10 @@ export default function Miniaturas() {
           </div>
 
           {/* SLIDE 4: Regalo Día del Padre */}
-          <div className="w-[88vw] sm:w-[85vw] md:w-screen h-full shrink-0 snap-center flex items-center justify-center px-2 md:px-16 max-w-full overflow-hidden my-auto">
-            <div className="w-full max-w-6xl flex flex-col md:flex-row gap-4 md:gap-16 items-center justify-center max-h-[90vh]">
+          <div className="w-[85vw] sm:w-[85vw] md:w-screen h-auto md:h-full shrink-0 snap-center flex items-center justify-center px-1 md:px-16 my-auto">
+            <div className="w-full max-w-6xl flex flex-col md:flex-row gap-4 md:gap-16 items-center justify-center">
               
-              <div className="w-full max-w-[260px] sm:max-w-md md:max-w-2xl aspect-4/3 md:aspect-square rounded-2xl md:rounded-3xl overflow-hidden border border-stone-200 bg-stone-100 shadow-md relative shrink-0">
+              <div className="w-full max-w-[250px] sm:max-w-md md:max-w-2xl aspect-4/3 md:aspect-square rounded-2xl md:rounded-3xl overflow-hidden border border-stone-200 bg-stone-100 shadow-md relative shrink-0">
                 <img 
                   src="/cuadro_viajero.jpg" 
                   alt="Cuadro Viajero Día del Padre" 
@@ -473,7 +487,7 @@ export default function Miniaturas() {
       </section>
 
       {/* ─── FILA 4: Contacto y Redes ────────────────── */}
-      <section className="w-full min-h-[50vh] bg-white flex flex-col items-center justify-center px-4 md:px-6 py-12 md:py-16 border-t border-stone-200">
+      <section className="w-full bg-white flex flex-col items-center justify-center px-4 md:px-6 py-12 md:py-20 border-t border-stone-200">
         <div className="w-full max-w-2xl text-center flex flex-col items-center gap-6">
           
           <div className="flex flex-col items-center gap-4">
