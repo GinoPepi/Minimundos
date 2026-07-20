@@ -496,7 +496,7 @@ export default function Miniaturas() {
               Escribinos para presupuestar tu rincón favorito, recrear un recuerdo o hacer un regalo inolvidable.
             </p>
             <a 
-              href="https://wa.me/549XXXXXXXXXX?text=¡Hola%20Dani!%20Vi%20tu%20página%20y%20me%20encantaría%20consultarte%20para%20encargarte%20un%20minimundo%20personalizado."
+              href="https://wa.me/5493513109593?text=¡Hola%20Dani!%20Vi%20tu%20página%20y%20me%20encantaría%20consultarte%20para%20encargarte%20un%20minimundo%20personalizado."
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2.5 bg-[#25D366] hover:bg-[#20ba5a] text-white font-bold py-4 px-8 md:py-5 md:px-10 rounded-full shadow-md transition-all duration-200 hover:scale-105 text-sm md:text-xl font-sans"
@@ -510,12 +510,12 @@ export default function Miniaturas() {
           <div className="flex flex-col items-center gap-3">
             <span className="text-[10px] md:text-sm uppercase tracking-widest text-stone-500 font-bold">seguinos en instagram</span>
             <a 
-              href="https://instagram.com/minimundos.dani" 
+              href="https://www.instagram.com/danielafernandez4354?igsh=MWNkOGZjazJrZ3l5eA==" 
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 border border-stone-900 hover:bg-stone-900 hover:text-white text-stone-900 font-bold py-3 px-6 md:py-4 md:px-8 rounded-full transition-all duration-200 text-sm md:text-lg"
             >
-              <span>@minimundos.dani</span>
+              <span>@danielafernandez4354</span>
             </a>
           </div>
 
