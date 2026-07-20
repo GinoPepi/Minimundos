@@ -304,31 +304,36 @@ export default function Miniaturas() {
         </div>
       </section>
 
-      {/* ─── FILA 3: Sección de Encargos ────────── */}
+      {/* ─── FILA 3: Sección de Encargos (Carrusel Táctil en Móvil / GSAP en PC) ────────── */}
       <section 
         ref={scrollSectionRef} 
         id="encargos" 
-        className="w-full h-screen bg-[#F9F6F0] overflow-hidden relative border-t border-stone-200"
+        className="w-full py-12 md:py-0 md:h-screen bg-[#F9F6F0] overflow-hidden relative border-t border-stone-200"
       >
+        {/* Indicador táctil visible solo en celulares */}
+        <div className="md:hidden text-center pb-4 text-[11px] font-bold text-stone-500 uppercase tracking-widest animate-pulse">
+          ← Deslizá con el dedo para ver encargos →
+        </div>
+
         <div 
           ref={scrollContainerRef} 
-          className="flex h-full w-[500vw]" 
+          className="flex overflow-x-auto md:overflow-visible snap-x snap-mandatory md:snap-none h-full w-full md:w-[500vw] gap-4 md:gap-0 px-4 md:px-0" 
         >
           
           {/* SLIDE 0: Diapositiva de Introducción */}
-          <div className="w-screen h-full shrink-0 flex flex-col items-center justify-center px-6 md:px-8 text-center bg-stone-900 text-stone-100 max-w-full overflow-hidden">
+          <div className="w-[88vw] sm:w-[80vw] md:w-screen h-[55vh] md:h-full shrink-0 snap-center rounded-3xl md:rounded-none flex flex-col items-center justify-center px-6 md:px-8 text-center bg-stone-900 text-stone-100 max-w-full overflow-hidden my-auto">
             <span className="text-xs md:text-sm text-lime-500 font-bold uppercase tracking-widest">Portafolio</span>
-            <h2 className="text-2xl md:text-6xl font-bold mt-4 max-w-3xl leading-tight">
+            <h2 className="text-xl sm:text-2xl md:text-6xl font-bold mt-4 max-w-3xl leading-tight">
               Así nacen nuestros encargos: de una idea en chat al detalle físico.
             </h2>
-            <p className="text-xs md:text-sm text-stone-400 mt-8 animate-pulse">↓ Seguí bajando para recorrerlos hacia el costado ↓</p>
+            <p className="text-xs md:text-sm text-stone-400 mt-6 hidden md:block animate-pulse">↓ Seguí bajando para recorrerlos hacia el costado ↓</p>
           </div>
 
           {/* SLIDE 1: Santinivial S.A. */}
-          <div className="w-screen h-full shrink-0 flex items-center justify-center px-4 md:px-16 max-w-full overflow-hidden">
-            <div className="w-full max-w-6xl flex flex-col md:flex-row gap-6 md:gap-16 items-center justify-center max-h-[90vh] overflow-hidden">
+          <div className="w-[88vw] sm:w-[85vw] md:w-screen h-full shrink-0 snap-center flex items-center justify-center px-2 md:px-16 max-w-full overflow-hidden my-auto">
+            <div className="w-full max-w-6xl flex flex-col md:flex-row gap-4 md:gap-16 items-center justify-center max-h-[90vh]">
               
-              <div className="w-full md:w-1/2 max-w-70 sm:max-w-md md:max-w-2xl aspect-4/3 md:aspect-square rounded-3xl overflow-hidden border border-stone-200 bg-stone-100 shadow-md relative shrink-0">
+              <div className="w-full max-w-[260px] sm:max-w-md md:max-w-2xl aspect-4/3 md:aspect-square rounded-2xl md:rounded-3xl overflow-hidden border border-stone-200 bg-stone-100 shadow-md relative shrink-0">
                 <img 
                   src="/cuadro_santinivial.jpg" 
                   alt="Cuadro Santinivial S.A." 
@@ -340,8 +345,8 @@ export default function Miniaturas() {
                 />
               </div>
 
-              <div className="w-full md:w-1/2 max-w-md md:max-w-xl flex flex-col items-start font-sans">
-                <div className="bg-[#d9fdd3] text-stone-900 p-5 md:p-8 rounded-2xl md:rounded-3xl rounded-tl-none shadow-md border border-emerald-100 relative w-full">
+              <div className="w-full max-w-md md:max-w-xl flex flex-col items-start font-sans">
+                <div className="bg-[#d9fdd3] text-stone-900 p-4 md:p-8 rounded-2xl md:rounded-3xl rounded-tl-none shadow-md border border-emerald-100 relative w-full">
                   <div className="text-xs md:text-sm font-bold text-emerald-800 mb-2 flex items-center gap-1.5">
                     <span>💬 WhatsApp</span>
                     <span className="text-stone-400 font-normal">• Cliente</span>
@@ -349,7 +354,7 @@ export default function Miniaturas() {
                   <p className="text-xs sm:text-sm md:text-xl text-stone-800 leading-relaxed font-medium">
                     "¡Hola! ¿Seguís haciendo cuadros? Necesito armar uno para Santinivial S.A. Tendría que tener un pozo profundo con tubos, un tractor bajando uno, el techo y logo de YPF con sus colores, y al lado un hombre con jeans, camisa, casco blanco y papeles en mano."
                   </p>
-                  <div className="text-[9px] md:text-xs text-stone-400 text-right mt-3 flex items-center justify-end gap-1 select-none">
+                  <div className="text-[9px] md:text-xs text-stone-400 text-right mt-2 md:mt-3 flex items-center justify-end gap-1 select-none">
                     <span>20:22</span>
                     <span className="text-sky-500 font-sans font-bold">✓✓</span>
                   </div>
@@ -360,10 +365,10 @@ export default function Miniaturas() {
           </div>
 
           {/* SLIDE 2: Podología */}
-          <div className="w-screen h-full shrink-0 flex items-center justify-center px-4 md:px-16 bg-[#ECE8E1] max-w-full overflow-hidden">
-            <div className="w-full max-w-6xl flex flex-col md:flex-row gap-6 md:gap-16 items-center justify-center max-h-[90vh] overflow-hidden">
+          <div className="w-[88vw] sm:w-[85vw] md:w-screen h-full shrink-0 snap-center flex items-center justify-center px-2 md:px-16 max-w-full overflow-hidden my-auto">
+            <div className="w-full max-w-6xl flex flex-col md:flex-row gap-4 md:gap-16 items-center justify-center max-h-[90vh]">
               
-              <div className="w-full md:w-1/2 max-w-70 sm:max-w-md md:max-w-2xl aspect-4/3 md:aspect-square rounded-3xl overflow-hidden border border-stone-200 bg-stone-100 shadow-md relative shrink-0">
+              <div className="w-full max-w-[260px] sm:max-w-md md:max-w-2xl aspect-4/3 md:aspect-square rounded-2xl md:rounded-3xl overflow-hidden border border-stone-200 bg-stone-100 shadow-md relative shrink-0">
                 <img 
                   src="/cuadro_podologia.jpg" 
                   alt="Cuadro Consultorio Podológico" 
@@ -375,8 +380,8 @@ export default function Miniaturas() {
                 />
               </div>
 
-              <div className="w-full md:w-1/2 max-w-md md:max-w-xl flex flex-col items-start font-sans">
-                <div className="bg-[#d9fdd3] text-stone-900 p-5 md:p-8 rounded-2xl md:rounded-3xl rounded-tl-none shadow-md border border-emerald-100 relative w-full">
+              <div className="w-full max-w-md md:max-w-xl flex flex-col items-start font-sans">
+                <div className="bg-[#d9fdd3] text-stone-900 p-4 md:p-8 rounded-2xl md:rounded-3xl rounded-tl-none shadow-md border border-emerald-100 relative w-full">
                   <div className="text-xs md:text-sm font-bold text-emerald-800 mb-2 flex items-center gap-1.5">
                     <span>💬 WhatsApp</span>
                     <span className="text-stone-400 font-normal">• Cliente</span>
@@ -384,7 +389,7 @@ export default function Miniaturas() {
                   <p className="text-xs sm:text-sm md:text-xl text-stone-800 leading-relaxed font-medium">
                     "Hola Daniela, ¡mucho gusto! Me interesan esos cuadros que hacés. Hace poco me recibí de podóloga y me gustaría encargar uno sobre mi consultorio personal. ¿Te basás en una foto del lugar? ¿Cuáles son las medidas estándar?"
                   </p>
-                  <div className="text-[9px] md:text-xs text-stone-400 text-right mt-3 flex items-center justify-end gap-1 select-none">
+                  <div className="text-[9px] md:text-xs text-stone-400 text-right mt-2 md:mt-3 flex items-center justify-end gap-1 select-none">
                     <span>21:22</span>
                     <span className="text-sky-500 font-sans font-bold">✓✓</span>
                   </div>
@@ -395,10 +400,10 @@ export default function Miniaturas() {
           </div>
 
           {/* SLIDE 3: Local de Mates y Asado */}
-          <div className="w-screen h-full shrink-0 flex items-center justify-center px-4 md:px-16 max-w-full overflow-hidden">
-            <div className="w-full max-w-6xl flex flex-col md:flex-row gap-6 md:gap-16 items-center justify-center max-h-[90vh] overflow-hidden">
+          <div className="w-[88vw] sm:w-[85vw] md:w-screen h-full shrink-0 snap-center flex items-center justify-center px-2 md:px-16 max-w-full overflow-hidden my-auto">
+            <div className="w-full max-w-6xl flex flex-col md:flex-row gap-4 md:gap-16 items-center justify-center max-h-[90vh]">
               
-              <div className="w-full md:w-1/2 max-w-70 sm:max-w-md md:max-w-2xl aspect-4/3 md:aspect-square rounded-3xl overflow-hidden border border-stone-200 bg-stone-100 shadow-md relative shrink-0">
+              <div className="w-full max-w-[260px] sm:max-w-md md:max-w-2xl aspect-4/3 md:aspect-square rounded-2xl md:rounded-3xl overflow-hidden border border-stone-200 bg-stone-100 shadow-md relative shrink-0">
                 <img 
                   src="/cuadro_mates.jpg" 
                   alt="Cuadro Local de Mates y Asado" 
@@ -410,8 +415,8 @@ export default function Miniaturas() {
                 />
               </div>
 
-              <div className="w-full md:w-1/2 max-w-md md:max-w-xl flex flex-col items-start font-sans">
-                <div className="bg-[#d9fdd3] text-stone-900 p-5 md:p-8 rounded-2xl md:rounded-3xl rounded-tl-none shadow-lg border border-emerald-100 relative w-full">
+              <div className="w-full max-w-md md:max-w-xl flex flex-col items-start font-sans">
+                <div className="bg-[#d9fdd3] text-stone-900 p-4 md:p-8 rounded-2xl md:rounded-3xl rounded-tl-none shadow-lg border border-emerald-100 relative w-full">
                   <div className="text-xs md:text-sm font-bold text-emerald-800 mb-2 flex items-center gap-1.5">
                     <span>💬 WhatsApp</span>
                     <span className="text-stone-400 font-normal">• Cliente</span>
@@ -419,7 +424,7 @@ export default function Miniaturas() {
                   <p className="text-xs sm:text-sm md:text-xl text-stone-800 leading-relaxed font-medium">
                     "¡Hola Dani! Es para alguien que tiene un negocio de mates y cosas para el asado. Entrás y tenés estantes con vasos y termos a la izquierda, una mesa con cuchillos al centro y atrás el escritorio con la compu. ¡Confío pleno en tus diseños!"
                   </p>
-                  <div className="text-[9px] md:text-xs text-stone-400 text-right mt-3 flex items-center justify-end gap-1 select-none">
+                  <div className="text-[9px] md:text-xs text-stone-400 text-right mt-2 md:mt-3 flex items-center justify-end gap-1 select-none">
                     <span>21:36</span>
                     <span className="text-sky-500 font-sans font-bold">✓✓</span>
                   </div>
@@ -430,10 +435,10 @@ export default function Miniaturas() {
           </div>
 
           {/* SLIDE 4: Regalo Día del Padre */}
-          <div className="w-screen h-full shrink-0 flex items-center justify-center px-4 md:px-16 bg-[#ECE8E1] max-w-full overflow-hidden">
-            <div className="w-full max-w-6xl flex flex-col md:flex-row gap-6 md:gap-16 items-center justify-center max-h-[90vh] overflow-hidden">
+          <div className="w-[88vw] sm:w-[85vw] md:w-screen h-full shrink-0 snap-center flex items-center justify-center px-2 md:px-16 max-w-full overflow-hidden my-auto">
+            <div className="w-full max-w-6xl flex flex-col md:flex-row gap-4 md:gap-16 items-center justify-center max-h-[90vh]">
               
-              <div className="w-full md:w-1/2 max-w-70 sm:max-w-md md:max-w-2xl aspect-4/3 md:aspect-square rounded-3xl overflow-hidden border border-stone-200 bg-stone-100 shadow-md relative shrink-0">
+              <div className="w-full max-w-[260px] sm:max-w-md md:max-w-2xl aspect-4/3 md:aspect-square rounded-2xl md:rounded-3xl overflow-hidden border border-stone-200 bg-stone-100 shadow-md relative shrink-0">
                 <img 
                   src="/cuadro_viajero.jpg" 
                   alt="Cuadro Viajero Día del Padre" 
@@ -445,8 +450,8 @@ export default function Miniaturas() {
                 />
               </div>
 
-              <div className="w-full md:w-1/2 max-w-md md:max-w-xl flex flex-col items-start font-sans">
-                <div className="bg-[#d9fdd3] text-stone-900 p-5 md:p-8 rounded-2xl md:rounded-3xl rounded-tl-none shadow-lg border border-emerald-100 relative w-full">
+              <div className="w-full max-w-md md:max-w-xl flex flex-col items-start font-sans">
+                <div className="bg-[#d9fdd3] text-stone-900 p-4 md:p-8 rounded-2xl md:rounded-3xl rounded-tl-none shadow-lg border border-emerald-100 relative w-full">
                   <div className="text-xs md:text-sm font-bold text-emerald-800 mb-2 flex items-center gap-1.5">
                     <span>💬 WhatsApp</span>
                     <span className="text-stone-400 font-normal">• Cliente</span>
@@ -454,7 +459,7 @@ export default function Miniaturas() {
                   <p className="text-xs sm:text-sm md:text-xl text-stone-800 leading-relaxed font-medium">
                     "Hola, ¿podría hacerte un encargo para el Día del Padre? Ama viajar y además le gustan las motos. Como elementos se podría poner una mochila de mochilero que diga National Geographic, un mapa y una brújula."
                   </p>
-                  <div className="text-[9px] md:text-xs text-stone-400 text-right mt-3 flex items-center justify-end gap-1 select-none">
+                  <div className="text-[9px] md:text-xs text-stone-400 text-right mt-2 md:mt-3 flex items-center justify-end gap-1 select-none">
                     <span>21:06</span>
                     <span className="text-sky-500 font-sans font-bold">✓✓</span>
                   </div>
