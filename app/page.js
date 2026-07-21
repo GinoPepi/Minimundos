@@ -284,14 +284,16 @@ export default function Miniaturas() {
           </div>
 
           {/* LADO DERECHO: Escena de Spline */}
-          <div className="col-span-1 md:col-span-3 w-full h-[50vh] sm:h-[60vh] md:h-[70vh] rounded-3xl overflow-hidden border border-stone-200/80 shadow-sm bg-stone-50 relative cursor-grab active:cursor-grabbing pointer-events-none md:pointer-events-auto">
-            <Spline 
-              scene="https://prod.spline.design/L1gUDvcVuunENRBt/scene.splinecode" 
-              onLoad={handleSplineLoad}
-            />
+          <div className="col-span-1 md:col-span-3 w-full h-[350px] sm:h-[450px] md:h-[70vh] rounded-[2.5rem] overflow-hidden border border-stone-200/60 shadow-xl bg-white relative flex items-center justify-center pointer-events-none md:pointer-events-auto">
+            {/* Caja de resolución fija que fuerza a Spline a no cambiar la cámara */}
+            <div className="w-[500px] h-[500px] md:w-full md:h-full shrink-0 transform scale-[0.65] sm:scale-[0.85] md:scale-100 flex items-center justify-center [&>div]:!w-full [&>div]:!h-full [&>canvas]:!w-full [&>canvas]:!h-full">
+              <Spline 
+                scene="https://prod.spline.design/L1gUDvcVuunENRBt/scene.splinecode" 
+                onLoad={handleSplineLoad}
+              />
+            </div>
           </div>
-
-        </div>
+      </div>
       </section>
 
       {/* ─── FILA 2: Información de la Historia ───────────────── */}
