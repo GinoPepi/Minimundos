@@ -27,6 +27,36 @@ El sitio combina animación 3D, microinteracciones tipográficas y una experienc
 - **Despliegue:** [Vercel](https://vercel.com/)
 
 ---
+## 🚀 Instalación y Ejecución Local
+
+Si querés clonar este repositorio y correrlo en tu máquina local:
+
+1. **Clonar el repositorio:**
+   ```bash
+   git clone [https://github.com/TU_USUARIO/minimundos-dani.git](https://github.com/TU_USUARIO/minimundos-dani.git)
+   cd minimundos-dani
+
+2. **Instalar dependencias**
+    ```bash
+    npm install
+
+3. **iniciar el servidor de desarrollo**
+    ```bash
+    npm run dev
+
+4. **Abrir en el navegador**
+    Ingresá a http://localhost:3000 para ver la aplicación funcionando.
+
+## 🌐 Despliegue
+
+- El proyecto está optimizado para desplegarse en Vercel de forma directa:
+
+- Conectar el repositorio de GitHub a Vercel.
+
+- Vercel detectará Next.js automáticamente.
+
+- Hacer clic en Deploy.
+
 
 ## 📁 Estructura del Proyecto
 
@@ -46,32 +76,3 @@ minimundos-dani/
 ├── package.json
 ├── tailwind.config.js
 └── README.md
-🚀 Instalación y Ejecución Local
-Si querés clonar este repositorio y correrlo en tu máquina local:
-
-Clonar el repositorio:
-
-Bash
-git clone [https://github.com/TU_USUARIO/minimundos-dani.git](https://github.com/TU_USUARIO/minimundos-dani.git)
-cd minimundos-dani
-Instalar dependencias:
-
-Bash
-npm install
-Iniciar el servidor de desarrollo:
-
-Bash
-npm run dev
-Abrir en el navegador:
-Ingresá a http://localhost:3000 para ver la aplicación funcionando.
-
-🌐 Despliegue
-El proyecto está optimizado para desplegarse en Vercel de forma directa:
-
-Conectar el repositorio de GitHub a Vercel.
-
-Vercel detectará Next.js automáticamente.
-
-Hacer clic en Deploy.
-
-Desarrollado con ❤️ para Minimundos Dani.
