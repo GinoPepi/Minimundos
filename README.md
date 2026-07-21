@@ -1,36 +1,77 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🎨 Minimundos Dani — Landing Page & Portafolio Web
 
-## Getting Started
+Landing page interactiva y portafolio digital para **Minimundos Dani**, un emprendimiento artesanal dedicado a la creación de cuadros y escenarios en miniatura hechos a mano.
 
-First, run the development server:
+El sitio combina animación 3D, microinteracciones tipográficas y una experiencia adaptativa entre dispositivos para presentar la historia de la marca y exhibir los encargos personalizados.
 
-```bash
+---
+
+## ✨ Características Destacadas
+
+- **Experiencia 3D Interactiva (Hero):** Integración de modelo 3D dinámico cargado mediante `@splinetool/react-spline` con optimización de renderizado y escala responsiva.
+- **Tipografía Interactiva (Hover Effect):** Frase principal interactiva con cálculo de distancia tipográfica que reacciona al cursor con escalado y cambio de color.
+- **Animaciones al Scroll (GSAP & ScrollTrigger):** Revelado progresivo de componentes y tarjetas de historia a medida que el usuario navega.
+- **Showcase de Encargos Adaptativo (Responsive UX):**
+  - **Escritorio (`>= 768px`):** Scroll horizontal fijado (*pinned horizontal scroll*) gestionado por GSAP.
+  - **Móviles (`< 768px`):** Transición automática a carrusel táctil nativo mediante *CSS Scroll Snap* a 60 FPS, evitando interrupciones en el scroll táctil del celular.
+- **Integración Directa con Canales de Venta:** Botones dinámicos con mensajes preconfigurados hacia WhatsApp e Instagram.
+
+---
+
+## 🛠️ Tecnologías Utilizadas
+
+- **Framework:** [Next.js](https://nextjs.org/) (App Router, React)
+- **Estilos:** [Tailwind CSS](https://tailwindcss.com/)
+- **Animaciones & Scroll:** [GSAP](https://greensock.com/gsap/) (ScrollTrigger, MatchMedia)
+- **Renders 3D:** [Spline 3D](https://spline.design/) (`@splinetool/react-spline`)
+- **Despliegue:** [Vercel](https://vercel.com/)
+
+---
+
+## 📁 Estructura del Proyecto
+
+```text
+minimundos-dani/
+├── public/
+│   ├── logominimundos.png
+│   ├── cuadro_santinivial.jpg
+│   ├── cuadro_podologia.jpg
+│   ├── cuadro_mates.jpg
+│   └── cuadro_viajero.jpg
+├── src/
+│   └── app/
+│       ├── layout.js
+│       ├── page.js
+│       └── globals.css
+├── package.json
+├── tailwind.config.js
+└── README.md
+🚀 Instalación y Ejecución Local
+Si querés clonar este repositorio y correrlo en tu máquina local:
+
+Clonar el repositorio:
+
+Bash
+git clone [https://github.com/TU_USUARIO/minimundos-dani.git](https://github.com/TU_USUARIO/minimundos-dani.git)
+cd minimundos-dani
+Instalar dependencias:
+
+Bash
+npm install
+Iniciar el servidor de desarrollo:
+
+Bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Abrir en el navegador:
+Ingresá a http://localhost:3000 para ver la aplicación funcionando.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+🌐 Despliegue
+El proyecto está optimizado para desplegarse en Vercel de forma directa:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Conectar el repositorio de GitHub a Vercel.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Vercel detectará Next.js automáticamente.
 
-## Learn More
+Hacer clic en Deploy.
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Desarrollado con ❤️ para Minimundos Dani.
